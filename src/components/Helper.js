@@ -1,4 +1,4 @@
-const API = "https://ecombackendthe.herokuapp.com/api/"
+
 
 export const apiFetch = () => {
     return fetch("https://s3.us-east-2.amazonaws.com/ftilab.com/api/traffic-counter-cameras.json", {
@@ -13,13 +13,3 @@ export const apiFetch = () => {
 }
 
 
-
-export const getProducts = () => {
-    return fetch(`${API}/products`, {
-        method: "GET",
-    })
-        .then((response) => {
-            return response.json();
-        })
-        .catch((err) => console.log(err));
-};

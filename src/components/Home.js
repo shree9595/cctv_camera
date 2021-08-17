@@ -1,7 +1,7 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 
-import { apiFetch, getProducts } from './Helper'
+import { apiFetch } from './Helper'
 import { BiCctv } from 'react-icons/bi';
 import { BsTag } from 'react-icons/bs';
 
@@ -12,11 +12,11 @@ function Home() {
 
     const [cameraState, setCameraState] = useState([])
 
-    useEffect(() => {
-        Preload()
-    }, [])
+    // useEffect(() => {
+    //     Preload()
+    // }, [])
     const Preload = () => {
-        return getProducts().then((data) => {
+        return apiFetch().then((data) => {
             if (data.error) {
                 console.log(data.error);
             }
@@ -31,8 +31,8 @@ function Home() {
     const List = () => {
         return (
             <div className="container">
-                {/* <p>Showing All({cameraState.length})</p> */}
-                <p>Showing All(7)</p>
+                <p>Showing All({cameraState.length})</p>
+                {/* <p>Showing All(7)</p> */}
                 <div className="row">
                     <div className="col-12">
                         <div className="card">
@@ -74,8 +74,8 @@ function Home() {
 
 
                                                             <img
-                                                                // src={camera.SnapshotSignedUrl}
-                                                                src={'https://s3.us-east-2.amazonaws.com/futopstech.com/images/industries_index/06.png'}
+                                                                src={camera.SnapshotSignedUrl}
+                                                                // src={'https://s3.us-east-2.amazonaws.com/futopstech.com/images/industries_index/06.png'}
 
                                                                 width="80"
                                                                 alt="..."
@@ -88,24 +88,24 @@ function Home() {
                                                 </td>
 
                                                 <td>
-                                                    {/* {camera.DeviceID} */}
+                                                    {camera.DeviceID}
 
-                                                    DEB-NUC8i3BE-G6BE01300NXK
+                                                    {/* DEB-NUC8i3BE-G6BE01300NXK */}
 
                                                 </td>
                                                 <td>
 
 
 
-                                                    {/* {moment(camera.LastActivityTime.substring(0, 10), "YYYYMMDD").fromNow()} */}
-                                                    {moment("2021-08-16 12:26:09", "YYYYMMDD HH:mm:ss").fromNow()}
+                                                    {moment(camera.LastActivityTime.substring(0, 10), "YYYYMMDD").fromNow()}
+                                                    {/* {moment("2021-08-16 12:26:09", "YYYYMMDD HH:mm:ss").fromNow()} */}
 
                                                 </td>
 
                                                 <td>
-                                                    {/* {camera.Tags} */}
-                                                    {camera.category.name}
-                                                    "consectetur", "Dolor Sit", "Vestibulum", "Office"
+                                                    {camera.Tags}
+                                                   
+                                                    {/* "consectetur", "Dolor Sit", "Vestibulum", "Office" */}
                                                 </td>
                                             </tr>
                                         ))}

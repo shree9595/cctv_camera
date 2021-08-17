@@ -6,7 +6,7 @@ import {
   ImagePreview,
   PreviewContainer,
   PreviewList,
-} from "./file-upload.styles";
+} from "./photoStyle";
 
 const FileUpload = ({
   label,

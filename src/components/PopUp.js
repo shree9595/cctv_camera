@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import FileUpload from "./file-upload.component";
+import FileUpload from "./photoComponent";
 
 const PopForm = () => {
 
