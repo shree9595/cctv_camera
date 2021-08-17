@@ -12,9 +12,15 @@ function Home() {
 
     const [cameraState, setCameraState] = useState([])
 
-    // useEffect(() => {
-    //     Preload()
-    // }, [])
+    useEffect(() => {
+        const apiTimer = setInterval(
+            async () => {
+                await Preload()
+            }, 5000);
+
+        return () => clearInterval(apiTimer);
+    }, [])
+    
     const Preload = () => {
         return apiFetch().then((data) => {
             if (data.error) {
@@ -104,7 +110,7 @@ function Home() {
 
                                                 <td>
                                                     {camera.Tags}
-                                                   
+
                                                     {/* "consectetur", "Dolor Sit", "Vestibulum", "Office" */}
                                                 </td>
                                             </tr>
