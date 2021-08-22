@@ -1,26 +1,30 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import apiJson from "./api.json"
 
 import { apiFetch } from './Helper'
 import { BiCctv } from 'react-icons/bi';
 import { BsTag } from 'react-icons/bs';
 
 import PopForm from "./PopUp"
+import { ListGroupItem } from 'react-bootstrap';
 
 
 function Home() {
 
     const [cameraState, setCameraState] = useState([])
+    const [search, setSearch] = useState([])
+    const [value, setValue] = useState([])
 
     useEffect(() => {
         const apiTimer = setInterval(
             async () => {
-                await Preload()
+                // await Preload()
             }, 5000);
 
         return () => clearInterval(apiTimer);
     }, [])
-    
+
     const Preload = () => {
         return apiFetch().then((data) => {
             if (data.error) {
@@ -34,11 +38,19 @@ function Home() {
         )
     }
 
+
+
+    const handleDropdownChange = (e) => {
+        setValue({ selectValue: e.target.value });
+    }
+
+
+
     const List = () => {
         return (
             <div className="container">
-                <p>Showing All({cameraState.length})</p>
-                {/* <p>Showing All(7)</p> */}
+                <p>Showing All({apiJson.data.length})</p>
+
                 <div className="row">
                     <div className="col-12">
                         <div className="card">
@@ -60,10 +72,20 @@ function Home() {
 
                                     </thead>
                                     <tbody>
+                                        {apiJson && apiJson.data.filter(
 
-                                        {cameraState && cameraState.map((camera, index) => (
-                                            <tr
-                                            // key={index} 
+                                            val => {
+                                                if (search == "") {
+                                                    return val
+                                                } else if (value.selectValue == 2 && val.DeviceID.toString().toLowerCase().includes(search.toLowerCase())) {
+                                                    return val
+                                                } else if (value.selectValue == 1 && val.Tags.toString().toLowerCase().includes(search.toLowerCase())) {
+                                                    return val
+                                                }
+                                            }
+                                        ).map((camera, index) => (
+                                            < tr
+                                                key={index}
                                             >
                                                 <td>
                                                     <div className="row">
@@ -107,12 +129,20 @@ function Home() {
                                                     {/* {moment("2021-08-16 12:26:09", "YYYYMMDD HH:mm:ss").fromNow()} */}
 
                                                 </td>
+                                                {
+                                                    camera.Tags.map((cam) => {
+                                                        return (
+                                                            <td >
+                                                                <BsTag />
+                                                                {cam}
 
-                                                <td>
-                                                    {camera.Tags}
+                                                                {/* "consectetur", "Dolor Sit", "Vestibulum", "Office" */}
 
-                                                    {/* "consectetur", "Dolor Sit", "Vestibulum", "Office" */}
-                                                </td>
+                                                            </td>
+                                                        )
+                                                    })
+                                                }
+
                                             </tr>
                                         ))}
                                     </tbody>
@@ -127,10 +157,12 @@ function Home() {
                     </div>
                 </div>
 
-            </div>
+            </div >
 
         )
     }
+
+
 
     const Top = () => {
         return (
@@ -147,14 +179,14 @@ function Home() {
                             <h6>Search</h6>
                             <div className="input-group ">
 
-                                <input className="" type="text" placeholder="Search by device" />
+                                <input className="" value={search} type="text" onChange={e => setSearch(e.target.value)} placeholder="Search by device" />
                                 <div>
 
-                                    <select id="dropdown" style={{ height: "30px" }}>
-                                        <option value="N/A">
+                                    <select id="dropdown" onChange={handleDropdownChange} style={{ height: "30px" }}>
+                                        <option value="1">
                                             Tags
                                         </option>
-                                        <option value="N/A">
+                                        <option value="2">
                                             DeviceID
                                         </option>
 
@@ -213,6 +245,8 @@ function Home() {
             {Top()}
             <br></br>
             {List()}
+
+            {/* <List contacts={filteredContacts} /> */}
         </div>
 
 

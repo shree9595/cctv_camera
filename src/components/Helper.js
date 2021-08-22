@@ -1,7 +1,7 @@
 
 
 export const apiFetch = () => {
-    return fetch("https://s3.us-east-2.amazonaws.com/ftilab.com/api/traffic-counter-cameras.json", {
+    return fetch("C:\Users\ShRee\Desktop\reactapp\src\components\api.json", {
         method: "GET"
     })
         .then((response) => {
